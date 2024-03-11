@@ -1,0 +1,93 @@
+// Chatbot.js
+import React, { useState } from 'react';
+
+const Chatbot = () => {
+  const [messages, setMessages] = useState([]);
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const message = e.target.elements.message.value;
+    if (message.trim() !== '') {
+      setMessages([...messages, { text: message, fromUser: true }]);
+      setTimeout(() => {
+        handleBotResponse(message.toLowerCase());
+      }, 1000);
+      e.target.elements.message.value = '';
+    }
+  };
+
+  const handleBotResponse = (message) => {
+    let response;
+    switch (message) {
+      case 'hello':
+        response = "Hi there! How can I help you today?";
+        break;
+      case 'how are you?':
+        response = "I'm just a chatbot, so I don't have feelings, but thank you for asking!";
+        break;
+      case 'what is your name?':
+        response = "I'm just a chatbot, so I don't have a name.";
+        break;
+      case 'how do I change my car\'s oil?':
+        response = "To change your car's oil, you'll need to lift the car, drain the old oil, remove and replace the oil filter, and then refill the engine with new oil of the correct grade. You may want to consult your vehicle's manual or a mechanic for specific instructions.";
+        break;
+      case 'how do I jump-start a car?':
+        response = "To jump-start a car, you'll need jumper cables and another vehicle with a charged battery. Connect the red cable to the positive terminals of both batteries and the black cable to the negative terminal of the charged battery and a metal surface on the dead car. Start the charged car and let it run for a few minutes before attempting to start the dead car.";
+        break;
+      case 'what should I do if my car overheats?':
+        response = "If your car overheats, pull over to a safe location and turn off the engine. Allow the engine to cool down before opening the hood. Check the coolant level and radiator hoses for leaks or damage. If necessary, add coolant or water to the radiator. If the problem persists, you may need to contact a mechanic for further assistance.";
+        break;
+      case 'how do I change a flat tire?':
+        response = "To change a flat tire, park your car on a flat surface and engage the parking brake. Loosen the lug nuts on the flat tire, lift the car with a jack, remove the lug nuts and the flat tire, then mount the spare tire and tighten the lug nuts. Lower the car and tighten the lug nuts again, then stow the flat tire and tools.";
+        break;
+      case 'how often should I replace my car\'s brakes?':
+        response = "The frequency of brake replacement depends on several factors, including your driving habits, the type of vehicle you own, and the condition of your brakes. Generally, brake pads should be replaced every 30,000 to 70,000 miles, but it's essential to monitor your brakes for signs of wear and have them inspected regularly by a mechanic.";
+        break;
+      case 'what does it mean if my car makes a grinding noise when braking?':
+        response = "A grinding noise when braking usually indicates that the brake pads are worn down to the metal, causing metal-on-metal contact with the brake rotors. This can lead to further damage to the brake system and reduced braking performance. It's essential to have your brakes inspected and repaired as soon as possible to avoid safety risks.";
+        break;
+      case 'how do I diagnose a check engine light?':
+        response = "When the check engine light illuminates, it indicates that there is a problem with your vehicle's engine or emissions system. To diagnose the issue, you can use an OBD-II scanner to retrieve error codes stored in the vehicle's computer. These codes can provide insight into the specific problem, but it's often necessary to consult a mechanic for a thorough diagnosis and repair.";
+        break;
+      case 'how do I change a car battery?':
+        response = "To change a car battery, start by locating the battery and disconnecting the negative terminal first, followed by the positive terminal. Remove any clamps or brackets securing the battery in place, then lift it out of the battery tray. Install the new battery in the tray, reconnecting the positive terminal first, then the negative terminal. Make sure the connections are tight and secure before starting the vehicle.";
+        break;
+      case 'how do I check my car\'s tire pressure?':
+        response = "To check your car's tire pressure, you'll need a tire pressure gauge. Remove the valve stem cap from the tire, press the gauge onto the valve stem firmly, and read the pressure displayed on the gauge. Compare the reading to the recommended tire pressure listed in your vehicle's manual or on the driver's side door jamb.";
+        break;
+      case 'what should I do if my car's headlights are dim?':
+        response = "Dim headlights can be caused by various factors, including a weak battery, faulty alternator, or dirty headlights. Start by checking the battery and charging system, and clean the headlights if they appear cloudy or dirty. If the problem persists, have your vehicle inspected by a mechanic to diagnose and repair any underlying issues.";
+        break;
+      case 'how do I know if my car needs a new timing belt?':
+        response = "Signs that your car may need a new timing belt include engine misfires, unusual noises coming from the engine, or visible wear on the belt itself. It's essential to replace the timing belt according to the manufacturer's recommended maintenance schedule to avoid engine damage.";
+        break;
+      case 'what should I do if my car's air conditioning is not cold?':
+        response = "If your car's air conditioning is not blowing cold air, it may be due to a refrigerant leak, a faulty compressor, or a clogged condenser. Start by checking the refrigerant level and inspecting for leaks, then have your AC system inspected by a professional to diagnose and repair any issues.";
+        break;
+      // Add more responses related to vehicle repairs
+      default:
+        response = "I'm sorry, I don't understand that.";
+        break;
+    }
+    setMessages([...messages, { text: response, fromUser: false }]);
+  };
+
+  return (
+    <div>
+      <h1>Vehicle Repair Chatbot</h1>
+      <div style={{ height: '300px', overflowY: 'scroll' }}>
+        {messages.map((message, index) => (
+          <div key={index} style={{ textAlign: message.fromUser ? 'right' : 'left' }}>
+            {message.fromUser ? 'You: ' : 'Bot: '}{message.text}
+          </div>
+        ))}
+      </div>
+      <form onSubmit={handleSendMessage}>
+        <input type="text" name="message" placeholder="Type your message..." />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
+};
+
+export default Chatbot;
